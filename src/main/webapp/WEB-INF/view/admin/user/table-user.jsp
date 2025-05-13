@@ -32,6 +32,7 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th scope="col">STT</th>
                                         <th scope="col">ID</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Full Name</th>
@@ -41,6 +42,7 @@
                                 <tbody>
                                     <c:forEach var="user" items="${user1}">
                                         <tr>
+                                            <th scope="col">${user1.indexOf(user) + 1}</th>
                                             <th>${user.id}</th>
                                             <td>${user.email}</td>
                                             <td>${user.fullName}</td>
@@ -49,7 +51,8 @@
                                                     <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
                                                     <a href="/admin/user/update/${user.id}"
                                                         class="btn btn-warning">Update</a>
-                                                    <a class="btn btn-danger">Delete</a>
+                                                    <a href="/admin/user/delete/${user.id}"
+                                                        class="btn btn-danger">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>

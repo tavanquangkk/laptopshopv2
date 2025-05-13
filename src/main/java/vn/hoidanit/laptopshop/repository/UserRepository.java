@@ -3,8 +3,11 @@ package vn.hoidanit.laptopshop.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import jakarta.transaction.Transactional;
 import vn.hoidanit.laptopshop.domain.User;
 
 @Repository
@@ -13,6 +16,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findByEmailAndAddress(String email,String address);
     List<User> findByEmail(String email);
     User findUserById(long id);
+    void deleteById(long id);
+
+@Transactional
+    void deleteUserById(long id);
     
 
 }

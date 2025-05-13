@@ -32,5 +32,15 @@ public class UserService {
         System.out.println(eric);
         return eric;
     }
+    public boolean handleDeleteUser(long id){
+        try {
+            this.userRepository.deleteUserById(id);
+            System.out.println("run here");
+            return true;
+        } catch (Exception e) {
+          return false;
+        }
+      
+    }
     
 }

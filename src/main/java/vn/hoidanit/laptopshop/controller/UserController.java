@@ -1,8 +1,10 @@
 package vn.hoidanit.laptopshop.controller;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UserService;
 import vn.hoidanit.laptopshop.repository.UserRepository;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -38,6 +42,8 @@ public class UserController{
     @RequestMapping("/admin/user")
     public String getUserListPage(Model model){
         List<User> users = this.userService.getALlUsers();
+        int num0 = 0;
+        model.addAttribute("num0", num0);
         model.addAttribute("user1", users);
         //System.out.println(users);
         return "admin/user/table-user";
@@ -89,5 +95,30 @@ public class UserController{
 
         return  "redirect:/admin/user";
     }
+
+    @GetMapping("admin/user/delete/{id}")
+    public String confirmDeleteUser(Model model, @PathVariable("id") long id){
+        final User user = new User();
+        user.setId(id);
+        model.addAttribute("willDeleteUser", user);
+
+        return "admin/user/delete";
+    }
+    @PostMapping("/admin/user/delete")
+    public String postDeleteUser(@ModelAttribute("willDeleteUser") User user ) {
+        User isExitUser = this.userService.getUserById(user.getId());
+        if(isExitUser != null){
+
+            System.out.println(this.userService.handleDeleteUser(user.getId()));
+            return "redirect:/admin/user";
+        }else{
+            return "admin/user/error404";
+        }
+        
+        
+    }
+    
+
+
 }
 
