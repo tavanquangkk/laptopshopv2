@@ -11,7 +11,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
                 <meta name="author" content="Hỏi Dân IT" />
-                <title>Delete User</title>
+                <title>User Detail</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
@@ -23,32 +23,35 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Delete Users</h1>
+                                <h1 class="mt-4">Users Detail</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Users</li>
                                 </ol>
                                 <div class="container mt-5">
                                     <div class="row">
-                                        <div class="mx-auto  col-md-6 col-12">
-                                            <h1>Delete user ${willDeleteUser.id}</h1>
-                                            <form:form action="/admin/user/delete" method="post"
-                                                modelAttribute="willDeleteUser">
-                                                <div style="display: block;">
-                                                    <label class="form-label">ID:${willDeleteUser.id}</label>
-                                                    <form:input type="text" class="form-control" path="id" />
-                                                </div>
-                                                <div class="alert alert-danger" role="alert">
-                                                    Are you serious ?
+                                        <div class="col-12 mx-auto">
+                                            <div class="table-header d-flex justify-content-between">
+                                                <h3>Users detail with id = ${id}</h3>
+
+                                            </div>
+                                            <hr />
+                                            <div class="card" style="width: 60%;">
+                                                <div class="card-header">
+                                                    User Information
                                                 </div>
 
-                                                <button class="btn btn-warning mt-3" type="submit">Delete</button>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">ID: ${id}</li>
+                                                    <li class="list-group-item">Email: ${userDetail.email}</li>
+                                                    <li class="list-group-item">FullName: ${userDetail.fullName}</li>
+                                                    <li class="list-group-item">Address: ${userDetail.address}</li>
+                                                </ul>
+                                            </div>
+                                            <a href="/admin/user" class="btn btn-primary mt-3">Back</a>
 
-                                            </form:form>
                                         </div>
-
                                     </div>
-
                                 </div>
 
 
