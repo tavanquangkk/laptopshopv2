@@ -9,6 +9,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
@@ -52,7 +54,7 @@ public class UserController{
         List<User> users = this.userService.getALlUsers();
         int num0 = 0;
         model.addAttribute("num0", num0);
-        model.addAttribute("user1", users);
+        model.addAttribute("users", users);
         //System.out.println(users);
         return "admin/user/show";
     }
@@ -62,6 +64,9 @@ public class UserController{
         model.addAttribute("id", id);
         User userDetail = this.userService.getUserById(id);
         model.addAttribute("userDetail", userDetail);
+        if(userDetail.getAvatar() != ""){
+                model.addAttribute("urlImage", userDetail.getAvatar());
+            }
         return "admin/user/detail";
        
     }
@@ -77,10 +82,22 @@ public class UserController{
     
     @PostMapping("/admin/user/create")
     public String createUserPage(
-        Model model,@ModelAttribute("newUser") User user,
+        Model model,@ModelAttribute("newUser") @Valid User user,BindingResult newUserBindingResult ,  
+
         @RequestParam("avatarFile") MultipartFile file)
-    {
         
+    {
+        //validate
+
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors ) {
+            System.out.println (error.getField() + " - " + error.getDefaultMessage());
+        }
+        //validate no redirect because data will lost
+        if(newUserBindingResult.hasErrors()){
+            return "/admin/user/create";
+        }
+        //
         String avatar = this.uploadService.handleSaveUploadFile(file,"avatar");
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
 
@@ -105,18 +122,17 @@ public class UserController{
          User checkUserExit = this.userService.getUserById(updateUser.getId());
          if(checkUserExit != null){
 
-            String avatar = this.uploadService.handleSaveUploadFile(file,"avatar");
-            
+           
 
-            checkUserExit.setAvatar(avatar);
+            if(!file.isEmpty()){
+                 String avatar = this.uploadService.handleSaveUploadFile(file,"avatar");
+            
+                checkUserExit.setAvatar(avatar);
+            }
             checkUserExit.setAddress(updateUser.getAddress());
-            //checkUserExit.setEmail(updateUser.getEmail());
             checkUserExit.setPhone(updateUser.getPhone());
             checkUserExit.setFullName(updateUser.getFullName());
-            checkUserExit.setRole(this.userService.getRoleByName(updateUser.getRole().getName()));
-            
-
-            
+            checkUserExit.setRole(this.userService.getRoleByName(updateUser.getRole().getName()));            
             userService.handleSaveUser(checkUserExit);
          }
 

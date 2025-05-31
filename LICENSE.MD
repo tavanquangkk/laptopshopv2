@@ -1,6 +1,6 @@
 # 🚨 Proprietary License Agreement
 
-© 2025 **Hỏi Dân IT**. All Rights Reserved.  
+© 2025 **Quang SE**. All Rights Reserved.  
 
 This source code is provided **exclusively** for students enrolled in **Java Spring MVC - Xây Dựng FullStack Website với Spring Boot**.  
 

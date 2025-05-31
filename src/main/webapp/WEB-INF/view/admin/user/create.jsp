@@ -9,9 +9,9 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-                <meta name="author" content="Hỏi Dân IT" />
-                <title>Dashboard - Hỏi Dân IT</title>
+                <meta name="description" content="Quang SE - Dự án laptopshop" />
+                <meta name="author" content="Quang SE" />
+                <title>Dashboard - Quang SE</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -51,13 +51,26 @@
                                                 modelAttribute="newUser" enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label">Email:</label>
-                                                        <form:input type="email" class="form-control" path="email" />
+                                                        <c:set var="errorEmail">
+                                                            <form:errors path="email" cssClass="invalid-feedback" />
+                                                        </c:set>
+                                                        <label class="form-label">Email*:</label>
+                                                        <form:input type="email"
+                                                            class="form-control ${ not empty errorEmail ?'is-invalid':''}"
+                                                            path="email" />
+                                                        ${errorEmail}
                                                     </div>
                                                     <div class="col">
+                                                        <c:set var="errorPassword">
+                                                            <form:errors path="password" cssClass="invalid-feedback" />
+                                                        </c:set>
+
                                                         <label class="form-label">Password:</label>
-                                                        <form:input type="password" class="form-control"
+                                                        <form:input type="password"
+                                                            class="form-control ${not empty errorPassword ? 'is-invalid':''}"
                                                             path="password" />
+                                                        ${errorPassword}
+
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -66,8 +79,14 @@
                                                         <form:input type="tel" class="form-control" path="phone" />
                                                     </div>
                                                     <div class="col">
+                                                        <c:set var="errorFullName">
+                                                            <form:errors path="fullName" cssClass="invalid-feedback" />
+                                                        </c:set>
                                                         <label class="form-label">Full Name:</label>
-                                                        <form:input type="text" class="form-control" path="fullName" />
+                                                        <form:input type="text"
+                                                            class="form-control ${not empty errorFullName ? 'is-invalid':''}"
+                                                            path="fullName" />
+                                                        ${errorFullName}
                                                     </div>
                                                 </div>
                                                 <div>

@@ -1,6 +1,6 @@
 # 🚨 Điều Khoản Sử Dụng
 
-© 2025 **Hỏi Dân IT**. Bảo lưu mọi quyền.  
+© 2025 **Quang SE**. Bảo lưu mọi quyền.  
 
 Mã nguồn này được cung cấp **chỉ dành riêng cho học viên đã đăng ký** khóa học **Java Spring MVC - Xây Dựng FullStack Website với Spring Boot**.  
 

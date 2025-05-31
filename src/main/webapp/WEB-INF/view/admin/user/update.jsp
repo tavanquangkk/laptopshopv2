@@ -9,11 +9,30 @@
                 <meta charset="utf-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
-                <meta name="author" content="Hỏi Dân IT" />
+                <meta name="description" content="Quang SE - Dự án laptopshop" />
+                <meta name="author" content="Quang SE" />
                 <title>Update User</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(() => {
+                        const avatarFile = $("#avatarFile   ");
+                        const orgImage = "${currentUser.avatar}";
+                        if (orgImage) {
+                            const urlImage = "/images/avatar/" + orgImage;
+                            $("#avatarPreview").attr("src", urlImage);
+                            $("#avatarPreview").css({ "display": "block" });
+                        }
+                        avatarFile.change(function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+                        });
+                    });
+
+                </script>
+
             </head>
 
             <body class="sb-nav-fixed">
@@ -71,6 +90,10 @@
                                                         <input class="form-control" type="file" id="avatarFile"
                                                             name="avatarFile" accept=".png, .jpg, .jpeg">
                                                     </div>
+                                                    <div class="col-12 mb-3"><img alt="avatar preview"
+                                                            style="max-height: 250px; display: none;"
+                                                            id="avatarPreview">
+                                                    </div>
 
                                                 </div>
                                                 <button class="btn btn-warning mt-3" type="submit">Update</button>
@@ -90,7 +113,7 @@
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
-                <script src="js/scripts.js"></script>
+                <script src="/js/scripts.js"></script>
 
             </body>
 

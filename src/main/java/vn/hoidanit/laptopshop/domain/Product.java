@@ -1,27 +1,45 @@
 package vn.hoidanit.laptopshop.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
 public class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotNull
+    @Size(min=2,message = "không được để trống tên sản phẩm")
     private String name;
-    private double price;
+    @NotNull
+    @Min(value = 0,message = "nhập giá lớn hơn 0")
+    private long price;
     private String image;
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
+    @Size(min=1,message = "không được để trống mô tả sản phẩm")
     private String shortDesc;
+    @Min(value = 0,message = "nhập số lượng lớn hơn 0")
     private long quantity;
     private long sold;
     private String factory;
     private String target;
     
-    public Product(long id, String name, double price, String image, String detailDesc, String shortDesc, long quantity,
+    
+    public Product() {
+    }
+
+    public Product(long id, String name, long price, String image, String detailDesc, String shortDesc, long quantity,
             long sold, String factory, String target) {
         this.id = id;
         this.name = name;
@@ -51,11 +69,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
