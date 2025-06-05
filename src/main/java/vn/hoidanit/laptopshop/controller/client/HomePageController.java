@@ -40,13 +40,13 @@ public class HomePageController {
         
         
         model.addAttribute("products", products);
-        return "/client/homepage/show";
+        return "client/homepage/show";
     }
 
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("registerUser", new RegisterDTO());
-        return "/client/auth/register";
+        return "client/auth/register";
     }
     
     @PostMapping("/register")
@@ -58,7 +58,7 @@ public class HomePageController {
         }
         
         if(bindingResult.hasErrors()){
-            return "/client/auth/register";
+            return "client/auth/register";
         }
 
        User user = (User) this.userService.RegisterDTOtoUser(registerDTO);
@@ -68,10 +68,14 @@ public class HomePageController {
        this.userService.handleSaveUser(user);
         return "redirect:/login";
     }
+
     @GetMapping("/login")
-    public String getLoginPage() {
-        return "/client/auth/login";
+    public String getLoginPage(Model model) {
+        User loginUser = new User();
+        model.addAttribute("loginUser", loginUser);
+        return "client/auth/login";
     }
+
     
     
 }
