@@ -16,7 +16,8 @@ import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.domain.dto.RegisterDTO;
 import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UserService;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 
@@ -34,12 +35,14 @@ public class HomePageController {
     }
 
 
-    @GetMapping()
-    public String getHomePage(Model model){
+    @GetMapping("/")
+    public String getHomePage(Model model,HttpServletRequest request){
         List<Product> products = this.productService.getAllProduct();
         
         
         model.addAttribute("products", products);
+        HttpSession session = request.getSession(false);
+        
         return "client/homepage/show";
     }
 
@@ -75,7 +78,11 @@ public class HomePageController {
         model.addAttribute("loginUser", loginUser);
         return "client/auth/login";
     }
-
+    @GetMapping("/access-deny")
+    public String getDenyPage(Model model) {
+       
+        return "client/auth/deny";
+    }
     
     
 }

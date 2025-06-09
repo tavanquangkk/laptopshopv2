@@ -46,7 +46,7 @@ public class ProductController {
         model.addAttribute("products", list);
     
         
-        return "/admin/product/show";
+        return "admin/product/show";
     }
     @GetMapping("/admin/product/create")
     public String getCreateProductPage(Model model){
