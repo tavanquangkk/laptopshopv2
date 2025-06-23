@@ -24,7 +24,7 @@
        ${eric}
     </h1>
     <h2>
-        ${hoidanit}
+        ${quangit}
     </h2>
     <button class="btn btn-warning">Submit</button>
 </body>

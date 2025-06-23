@@ -31,7 +31,7 @@ Nếu bạn **chia sẻ mã nguồn này mà không có sự cho phép**, bạn 
 - Áp dụng **biện pháp pháp lý** nếu vi phạm nghiêm trọng.  
 
 📩 **Liên hệ để xin cấp phép hoặc giải đáp thắc mắc:**  
-✉️ **admin@hoidanit.vn**  
+✉️ **admin@quangit.vn**  
 
 ---
 

@@ -15,7 +15,7 @@ This source code is provided **exclusively for enrolled students** in this cours
 - Account suspension on learning platforms.  
 - Legal action in serious cases.  
 
-📩 For inquiries, contact: **admin@hoidanit.vn**
+📩 For inquiries, contact: **admin@quangit.vn**
 
 ---
 
@@ -27,11 +27,11 @@ Môi trường chạy dự án: Java 17
 ## Về tác giả
 Mọi thông tin về Tác giả Quang SE, các bạn có thể tìm kiếm tại đây:
 
-Website chính thức: https://hoidanit.vn/
+Website chính thức: https://quangit.vn/
 
-Youtube “Quang SE” : https://www.youtube.com/@hoidanit
+Youtube “Quang SE” : https://www.youtube.com/@quangit
 
-Tiktok “Quang SE” :  https://www.tiktok.com/@hoidanit
+Tiktok “Quang SE” :  https://www.tiktok.com/@quangit
 
 Fanpage “Quang SE” : https://www.facebook.com/askITwithERIC/
 
