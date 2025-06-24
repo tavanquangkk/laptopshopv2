@@ -30,7 +30,10 @@
 
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
-
+                <meta name="_csrf" content="${_csrf.token}" />
+                <meta name="_csrf_header" content="${_csrf.headerName}" />
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css"
+                    rel="stylesheet">
 
             </head>
 
@@ -129,16 +132,17 @@
                                                 </button>
                                             </div>
                                             <input type="text" class="form-control form-control-sm text-center border-0"
-                                                value="1">
+                                                id="${product.quantity}" value="1">
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
                                         </div>
-                                        <a href="#"
-                                            class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
-                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                        <input type="hidden" name="quantity" id="cartDetails0.quantity" value="1" />
+                                        <button
+                                            class="btnAddToCartDetail btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
                                     </div>
                                     <div class="col-lg-12">
                                         <nav>
@@ -278,6 +282,7 @@
 
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
             </body>
 
             </html>

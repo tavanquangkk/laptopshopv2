@@ -1,6 +1,7 @@
 package vn.quangit.laptopshop.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import vn.quangit.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.quangit.laptopshop.repository.CartDetailRepository;
 import vn.quangit.laptopshop.repository.CartRepository;
 import vn.quangit.laptopshop.repository.ProductRepository;
+import vn.quangit.laptopshop.repository.UserRepository;
 import vn.quangit.laptopshop.service.specification.ProductSpecs;
 
 @Service
@@ -26,15 +28,17 @@ public class ProductService {
     private final CartRepository cartRepository;
     private final CartDetailRepository cartDetailRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
 
    
     public ProductService(ProductRepository productRepository, CartRepository cartRepository,
-            CartDetailRepository cartDetailRepository,UserService userService) 
+            CartDetailRepository cartDetailRepository,UserService userService,UserRepository userRepository) 
         {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
         this.cartDetailRepository = cartDetailRepository;
         this.userService = userService;
+        this.userRepository = userRepository;
     }
     private Specification<Product> buildPriceSpecification(List<String> prices) {
         Specification<Product> combineSpecifications = Specification.where(null);
@@ -212,4 +216,38 @@ public class ProductService {
 
    
 
+
+
+    public void handleAddProductToCart2(HttpSession session, Long id, long quantity) {
+        User user = userRepository.findByEmail(session.getAttribute("email").toString());
+        if (Objects.isNull(user)) {
+            System.out.println("User not found");
+        }
+        //Create new cart
+        Cart cart = cartRepository.findByUser(user);
+        if (Objects.isNull(cart)) {
+            cart = new Cart();
+            cart.setUser(user);
+            cart.setSum(0);
+            cart = cartRepository.save(cart);
+        }
+        //Save cart detail
+        Product product = this.productRepository.findById(id).isPresent()?this.productRepository.findById(id).get() : new Product() ;
+        CartDetail cartDetail = cartDetailRepository.findByCartAndProduct(cart, product);
+        if (Objects.isNull(cartDetail)) {
+            cartDetail = new CartDetail();
+            cartDetail.setCart(cart);
+            cartDetail.setProduct(product);
+            cartDetail.setQuantity(quantity);
+            cartDetail.setPrice(product.getPrice());
+
+            //Update sum cart
+            cart.setSum(cart.getSum() + 1);
+            cartRepository.save(cart);
+            session.setAttribute("sum", cart.getSum());
+        } else {
+            cartDetail.setQuantity(cartDetail.getQuantity() + quantity);
+        }
+        cartDetailRepository.save(cartDetail);
+    }
 }

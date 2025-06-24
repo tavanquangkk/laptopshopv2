@@ -49,6 +49,11 @@
                     });
                 });
             </script>
+            <link href="/client/css/style.css" rel="stylesheet">
+            <meta name="_csrf" content="${_csrf.token}" />
+            <meta name="_csrf_header" content="${_csrf.headerName}" />
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css"
+                rel="stylesheet">
 
 
         </head>
@@ -134,7 +139,7 @@
                                 <!-- if user has not been login -->
                                 <c:if test="${ empty pageContext.request.userPrincipal}">
 
-                                    <a href="/login" class="position-relative me-4 my-auto">
+                                    <a href="/login" class="a-login position-relative me-4 my-auto">
                                         Login
                                     </a>
                                 </c:if>
@@ -144,6 +149,8 @@
                 </div>
             </div>
             <!-- Navbar End -->
+            <script src="/client/js/main.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
         </body>
 
         </html>
