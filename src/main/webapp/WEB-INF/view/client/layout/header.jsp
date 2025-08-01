@@ -74,7 +74,8 @@
                 <div class="container px-0">
                     <nav class="navbar navbar-light bg-white navbar-expand-xl">
                         <a href="/" class="navbar-brand">
-                            <img src="/client/img/logo.png" alt="MY SHOP" class="logo-shop">
+                            <img src="https://res.cloudinary.com/dc4qaf44w/image/upload/v1753962779/akjmio0lguxeoopwr6mb.png"
+                                alt="MY SHOP" class="logo-shop">
                         </a>
                         <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarCollapse">
@@ -110,7 +111,7 @@
                                             aria-labelledby="dropdownMenuLink">
                                             <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
                                                 <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
-                                                    src="/images/avatar/${sessionScope.avatar}" />
+                                                    src="${sessionScope.avatar}" />
                                                 <div class="text-center my-3">
                                                     <c:out value="${sessionScope.fullName}" />
 

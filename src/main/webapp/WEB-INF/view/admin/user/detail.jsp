@@ -38,7 +38,7 @@
                                             </div>
                                             <hr />
                                             <div class="card" style="width: 60%;">
-                                                <img src="/images/avatar/${urlImage}" alt="" style="width: 200px;">
+                                                <img src="${urlImage}" alt="" style="width: 200px;">
                                                 <div class="card-header">
                                                     User Information
                                                 </div>

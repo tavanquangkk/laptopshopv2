@@ -88,7 +88,7 @@
                                 <c:forEach items="${allProductInCart}" var="productInCart">
                                     <tr>
                                         <td>
-                                            <img src="/images/product/${productInCart.product.image}"
+                                            <img src="${productInCart.product.image}"
                                                 onerror="if (this.src == null) this.src = '/images/default/default.jpg';"
                                                 alt="product image" style="width: 100px;">
                                         </td>

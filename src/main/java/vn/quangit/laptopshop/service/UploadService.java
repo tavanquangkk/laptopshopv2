@@ -1,52 +1,38 @@
 package vn.quangit.laptopshop.service;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.ServletContext;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
+import java.io.IOException;
+import java.util.Map;
 
 @Service
 public class UploadService {
-     private final ServletContext servletContext;
-     
 
-    public UploadService(ServletContext servletContext) {
-        this.servletContext = servletContext;
-        
+    private final Cloudinary cloudinary;
+
+    public UploadService(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
     }
 
-
-    public String handleSaveUploadFile(MultipartFile file,String targetFolder){
-        if(file.isEmpty()){
+    public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
+        if (file.isEmpty()) {
             return "";
         }
-         String rootPath = this.servletContext.getRealPath("/resources/images");
-         String finalName = "";
         try {
-                byte[] bytes = file.getBytes();
-               
-
-            File dir = new File(rootPath + File.separator + targetFolder);
-            if (!dir.exists())
-                dir.mkdirs();
-
-            // Create the file on server
-            finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-            File serverFile = new File(dir.getAbsolutePath() + File.separator + finalName);
-
-            BufferedOutputStream stream = new BufferedOutputStream(
-                    new FileOutputStream(serverFile));
-            stream.write(bytes);
-            stream.close();
-          
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-              return finalName;
+            Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
+                    ObjectUtils.asMap(
+                            "folder", targetFolder,  // thư mục trên Cloudinary
+                            "resource_type", "auto"  // tự động nhận dạng loại file
+                    ));
+            // Lấy url ảnh sau khi upload
+            return (String) uploadResult.get("secure_url");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
-    
 }

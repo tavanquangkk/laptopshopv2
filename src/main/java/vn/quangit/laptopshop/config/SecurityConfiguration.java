@@ -23,83 +23,77 @@ import vn.quangit.laptopshop.service.validator.CustomUserDetailsService;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
-    
-     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
+        @Bean
+        public UserDetailsService userDetailsService(UserService userService) {
+                return new CustomUserDetailsService(userService);
+        }
 
+        @Bean
+        public DaoAuthenticationProvider authProvider(
+                        PasswordEncoder passwordEncoder,
+                        UserDetailsService userDetailsService) {
 
+                DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+                authProvider.setUserDetailsService(userDetailsService);
+                authProvider.setPasswordEncoder(passwordEncoder);
+                // authProvider.setHideUserNotFoundExceptions(false);
 
-    @Bean
-    public UserDetailsService userDetailsService(UserService userService) {
-        return new CustomUserDetailsService(userService);
-    }
+                return authProvider;
+        }
 
-    @Bean
-    public DaoAuthenticationProvider authProvider(
-            PasswordEncoder passwordEncoder,
-            UserDetailsService userDetailsService) {
+        @Bean
+        public AuthenticationSuccessHandler customSuccessHandler() {
+                return new CustomSuccessHandler();
+        }
 
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
-        //authProvider.setHideUserNotFoundExceptions(false);
+        @Bean
+        public SpringSessionRememberMeServices rememberMeServices() {
+                SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+                // optionally customize
+                rememberMeServices.setAlwaysRemember(true);
+                // rememberMeServices.setValiditySeconds -> khong set thi session live forever
+                return rememberMeServices;
+        }
 
-        return authProvider;
-    }
-    @Bean
-    public AuthenticationSuccessHandler customSuccessHandler(){
-        return new CustomSuccessHandler();
-    }
+        @Bean
+        SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                // spring6 lambda
+                http
 
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                                                DispatcherType.INCLUDE)
+                                                .permitAll()
+                                                .requestMatchers("/", "/login", "/register", "/product/**",
+                                                                "/products/**",
+                                                                "/client/**", "/css/**", "/js/**", "/images/**")
+                                                .permitAll()
+                                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                                .anyRequest().authenticated())
+                                .sessionManagement((sessionManagement) -> sessionManagement
+                                                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // create new
+                                                                                                     // session
+                                                .invalidSessionUrl("/logout?expired") // het han thi logout
+                                                .maximumSessions(1) // can use only one device ,
+                                                .maxSessionsPreventsLogin(false)) // protect login
 
-    @Bean
-    public SpringSessionRememberMeServices rememberMeServices() {
-        SpringSessionRememberMeServices rememberMeServices =
-                new SpringSessionRememberMeServices();
-        // optionally customize
-        rememberMeServices.setAlwaysRemember(true);
-        //rememberMeServices.setValiditySeconds -> khong set thi session live forever
-        return rememberMeServices;
-    }
+                                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
 
-     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // spring6 lambda
-        http
+                                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
+                                .formLogin(formLogin -> formLogin
+                                                .loginPage("/login")
+                                                .failureUrl("/login?error")
+                                                .successHandler(customSuccessHandler())
+                                                .permitAll())
 
-                .authorizeHttpRequests(authorize -> authorize
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
-                                DispatcherType.INCLUDE) .permitAll()
-                        .requestMatchers("/","/login","/register", "/product/**","/products/**",
-                        "/client/**", "/css/**", "/js/**", "/images/**")
-                        .permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
-                .sessionManagement((sessionManagement) -> sessionManagement
-                            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // create new session 
-                    .invalidSessionUrl("/logout?expired") // het han thi logout
-                                .maximumSessions(1) // can use only one device ,
-                    .maxSessionsPreventsLogin(false)) // protect login
+                                .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
 
-                    .logout(logout->logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
-
-                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .failureUrl("/login?error")
-                        .successHandler(customSuccessHandler())
-                        .permitAll())
-                        
-                .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
-
-        return http.build();
-    }
-
-
-
+                return http.build();
+        }
 
 }
-

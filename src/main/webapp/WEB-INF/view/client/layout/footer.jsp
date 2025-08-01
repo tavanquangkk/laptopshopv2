@@ -41,7 +41,8 @@
                         <div class="row g-4">
                             <div class="col-lg-3">
                                 <a href="#">
-                                    <img src="/client/img/logo.png" alt="Logo shop" class="logo-shop w-50">
+                                    <img src="https://res.cloudinary.com/dc4qaf44w/image/upload/v1753962779/akjmio0lguxeoopwr6mb.png"
+                                        alt="Logo shop" class="logo-shop w-50">
                                 </a>
                             </div>
                             <div class="col-lg-6">
@@ -104,7 +105,8 @@
                                 <p>メール: taquanga6dp@gmail.com</p>
                                 <p>電話番号: +0123 4567 8910</p>
                                 <p>ご利用可能なお支払い方法</p>
-                                <img src="/client/img/payment.png" class="img-fluid" alt="">
+                                <img src="https://www.test-tree.com/wp-content/uploads/2016/07/Payement-1-edit.png"
+                                    class="img-fluid" alt="">
                             </div>
                         </div>
                     </div>

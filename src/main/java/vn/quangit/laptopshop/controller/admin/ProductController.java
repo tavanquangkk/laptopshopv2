@@ -62,6 +62,7 @@ public class ProductController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
         model.addAttribute("products", products);
+
     
         
         return "admin/product/show";

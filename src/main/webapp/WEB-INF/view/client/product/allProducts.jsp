@@ -173,8 +173,8 @@
                                                 <div
                                                     class="rounded position-relative fruite-item border border-secondary border-top-0">
                                                     <div class="fruite-img h-50">
-                                                        <img src="/images/product/${product.image}"
-                                                            onerror="this.onerror=null; this.src='/images/default/default.jpeg'"
+                                                        <img src="${product.image}"
+                                                            onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/default/default.jpeg'"
                                                             class="img-fluid rounded-top " alt=""
                                                             style="height: 253px; object-fit: contain;">
                                                     </div>

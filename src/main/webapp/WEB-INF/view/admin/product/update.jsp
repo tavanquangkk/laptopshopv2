@@ -147,7 +147,7 @@
                                                         name="productImgFile" accept=".png, .jpg, .jpeg">
                                                 </div>
 
-                                                <div class="col-12 mb-3"><img alt="product image preview"
+                                                <div class="col-12 mb-3"><img  alt="product image preview"
                                                         style="max-height: 250px;display: none;" id="productImgPreview">
                                                 </div>
                                                 <div class="col-12 mb-3">

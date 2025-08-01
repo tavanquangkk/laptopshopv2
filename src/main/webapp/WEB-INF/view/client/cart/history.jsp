@@ -18,7 +18,8 @@
                     <div>
                         <div>
                             <a href="/" class="navbar-brand">
-                                <img src="/client/img/logo.png" alt="MY SHOP" class="logo-shop">
+                                <img src="https://res.cloudinary.com/dc4qaf44w/image/upload/v1753962779/akjmio0lguxeoopwr6mb.png"
+                                    alt="MY SHOP" class="logo-shop">
                             </a>
                         </div>
 
@@ -45,7 +46,7 @@
                                         <c:forEach items="${orderDetails}" var="orderDetail">
                                             <tr>
                                                 <td>
-                                                    <img src="/images/product/${orderDetail.product.image}"
+                                                    <img src="${orderDetail.product.image}"
                                                         onerror="if (this.src == null) this.src = '/images/default/default.jpg';"
                                                         alt="product image" style="width: 100px;">
                                                 </td>

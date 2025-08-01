@@ -16,7 +16,8 @@
             <div>
                 <div>
                     <a href="/" class="navbar-brand">
-                        <img src="/client/img/logo.png" alt="MY SHOP" class="logo-shop">
+                        <img src="https://res.cloudinary.com/dc4qaf44w/image/upload/v1753962779/akjmio0lguxeoopwr6mb.png"
+                            alt="MY SHOP" class="logo-shop">
                     </a>
                 </div>
 

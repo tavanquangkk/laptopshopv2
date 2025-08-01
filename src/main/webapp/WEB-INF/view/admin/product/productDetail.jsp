@@ -37,7 +37,7 @@
                                             </div>
                                             <hr />
                                             <div class="card" style="width: 60%;">
-                                                <img src="/images/product/${urlImage}" alt="" class="card-img-top"
+                                                <img src="${urlImage}" alt="" class="card-img-top"
                                                     style="width: 200px;">
                                                 <div class="card-header">
                                                     Product Information
