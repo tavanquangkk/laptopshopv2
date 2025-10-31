@@ -55,6 +55,8 @@
                                                     </thead>
                                                     <hr />
                                                     <tbody>
+                                                    <c:choose>
+                                                        <c:when test="${not empty orders}">
                                                         <c:forEach var="order" items="${orders}">
                                                             <tr>
                                                                 <th scope="col">${orders.indexOf(order) + 1}</th>
@@ -79,6 +81,11 @@
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
+                                                        </c:when>
+                                                            <c:otherwise>
+                                                                <p>Không có đơn hàng nào.</p>
+                                                            </c:otherwise>
+                                                        </c:choose>
 
 
 

@@ -86,25 +86,39 @@ public class ItemController {
     }
 
     @GetMapping("/cart")
-    public String getCartPage(Model model,HttpSession session) {
-        long id = (long) session.getAttribute("id");
+    public String getCartPage(Model model, HttpSession session) {
+        Object userIdObj = session.getAttribute("id");
+        if (userIdObj == null) {
+            // Nếu chưa login hoặc session hết hạn, tạo thông báo hoặc redirect
+            model.addAttribute("allProductInCart", new ArrayList<>());
+            model.addAttribute("totalPrice", 0);
+            model.addAttribute("cart", new Cart());
+            session.setAttribute("sum", 0);
+            return "client/cart/cart";
+        }
+
+        long id = (long) userIdObj;
         User user = this.userService.getUserById(id);
-        Cart cart = this.cartService.getCartByUser(user) != null ?this.cartService.getCartByUser(user):new Cart();
-        List<CartDetail> allProductInCart = cart.getCartDetail() != null? cart.getCartDetail():new ArrayList<>();
+        Cart cart = this.cartService.getCartByUser(user);
+        if (cart == null) {
+            cart = new Cart();
+            cart.setCartDetail(new ArrayList<>());
+        }
+
+        List<CartDetail> allProductInCart = cart.getCartDetail() != null ? cart.getCartDetail() : new ArrayList<>();
 
         long totalPrice = 0;
-        for(CartDetail c : allProductInCart){
+        for (CartDetail c : allProductInCart) {
             totalPrice += (c.getPrice() * c.getQuantity());
-        
         }
-        if(allProductInCart.size() == 0){
-            session.setAttribute("sum", 0);
-        }
+
+        session.setAttribute("sum", allProductInCart.size());
         model.addAttribute("allProductInCart", allProductInCart);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cart", cart);
         return "client/cart/cart";
     }
+
 
     @PostMapping("/cart/delete/{id}")
     public String deleteCartItem(@PathVariable long id,HttpSession session ){
