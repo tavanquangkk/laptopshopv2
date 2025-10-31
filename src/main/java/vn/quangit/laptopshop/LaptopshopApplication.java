@@ -1,25 +1,21 @@
-// src/main/java/vn/quangit/laptopshop/LaptopshopApplication.java
 package vn.quangit.laptopshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-// XÓA CÁC IMPORT NÀY
-// import org.springframework.boot.builder.SpringApplicationBuilder;
-// import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class LaptopshopApplication { // KHÔNG KẾ THỪA GÌ CẢ
+public class LaptopshopApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		System.out.println("anh yêu em nhiều lắm");
-		SpringApplication.run(LaptopshopApplication.class, args);
+	// Khi deploy WAR vào Tomcat, phương thức này sẽ được gọi
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(LaptopshopApplication.class);
 	}
 
-	// XÓA PHƯƠNG THỨC NÀY
-	// @Override
-	// protected SpringApplicationBuilder configure(SpringApplicationBuilder
-	// application) {
-	// return application.sources(LaptopshopApplication.class);
-	// }
+	// Dùng khi chạy local
+	public static void main(String[] args) {
+		SpringApplication.run(LaptopshopApplication.class, args);
+	}
 }
