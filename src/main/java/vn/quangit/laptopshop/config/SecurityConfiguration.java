@@ -75,21 +75,24 @@ public class SecurityConfiguration {
                                                 .permitAll()
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
-                                .sessionManagement((sessionManagement) -> sessionManagement
-                                                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // create new
-                                                                                                     // session
-                                                .invalidSessionUrl("/logout?expired") // het han thi logout
-                                                .maximumSessions(1) // can use only one device ,
-                                                .maxSessionsPreventsLogin(false)) // protect login
-
-                                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
-
-                                .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
-                                .formLogin(formLogin -> formLogin
-                                                .loginPage("/login")
-                                                .failureUrl("/login?error")
-                                                .successHandler(customSuccessHandler())
-                                                .permitAll())
+                               .sessionManagement(session -> session
+    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+    .invalidSessionUrl("/login?expired")
+)
+.logout(logout -> logout
+    .logoutUrl("/logout")
+    .logoutSuccessUrl("/login?logout")
+    .deleteCookies("JSESSIONID")
+    .invalidateHttpSession(true)
+    .permitAll()
+)
+.formLogin(form -> form
+    .loginPage("/login")
+    .loginProcessingUrl("/login")
+    .defaultSuccessUrl("/admin", true)
+    .failureUrl("/login?error=true")
+    .permitAll()
+)
 
                                 .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
 
