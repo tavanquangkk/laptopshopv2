@@ -76,23 +76,23 @@ public class SecurityConfiguration {
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
                                .sessionManagement(session -> session
-    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-    .invalidSessionUrl("/login?expired")
-)
-.logout(logout -> logout
-    .logoutUrl("/logout")
-    .logoutSuccessUrl("/login?logout")
-    .deleteCookies("JSESSIONID")
-    .invalidateHttpSession(true)
-    .permitAll()
-)
-.formLogin(form -> form
-    .loginPage("/login")
-    .loginProcessingUrl("/login")
-    .defaultSuccessUrl("/admin", true)
-    .failureUrl("/login?error=true")
-    .permitAll()
-)
+                                            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                                            .invalidSessionUrl("/login?expired")
+                                        )
+                                        .logout(logout -> logout
+                                            .logoutUrl("/logout")
+                                            .logoutSuccessUrl("/login?logout")
+                                            .deleteCookies("JSESSIONID")
+                                            .invalidateHttpSession(true)
+                                            .permitAll()
+                                        )
+                                        .formLogin(form -> form
+                                            .loginPage("/login")
+                                            .loginProcessingUrl("/login")
+                                            .defaultSuccessUrl("/", true)
+                                            .failureUrl("/login?error=true")
+                                            .permitAll()
+                                        )
 
                                 .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
 
