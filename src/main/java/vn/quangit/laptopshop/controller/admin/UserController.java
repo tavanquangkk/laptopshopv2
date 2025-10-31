@@ -152,7 +152,7 @@ public class UserController{
             checkUserExit.setAddress(updateUser.getAddress());
             checkUserExit.setPhone(updateUser.getPhone());
             checkUserExit.setFullName(updateUser.getFullName());
-            checkUserExit.setRole(this.userService.getRoleByName(updateUser.getRole().getName()));            
+            checkUserExit.setRole(this.userService.getRoleById(updateUser.getRole().getId()));
             userService.handleSaveUser(checkUserExit);
          }
 

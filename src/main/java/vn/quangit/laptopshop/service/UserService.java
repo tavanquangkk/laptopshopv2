@@ -1,6 +1,7 @@
 package vn.quangit.laptopshop.service;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,9 @@ public class UserService {
 
     public Role getRoleByName(String name){
         return this.roleRepository.findByName(name);
+    }
+  public Role getRoleById(long id){
+        return this.roleRepository.findById(id).orElseThrow();
     }
 
     // register DTO to User
