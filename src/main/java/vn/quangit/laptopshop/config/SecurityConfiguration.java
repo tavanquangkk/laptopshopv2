@@ -71,10 +71,11 @@ public class SecurityConfiguration {
                                                 .permitAll()
                                                 .requestMatchers("/", "/login", "/register", "/product/**",
                                                                 "/products/**",
-                                                                "/client/**", "/css/**", "/js/**", "/images/**")
+                                                                "/client/**", "/css/**", "/js/**", "/images/**","/api/add-product-to-cart")
                                                 .permitAll()
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
+
                                .sessionManagement(session -> session
                                             .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                                             .invalidSessionUrl("/login?expired")
