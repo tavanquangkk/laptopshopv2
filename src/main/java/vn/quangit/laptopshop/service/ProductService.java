@@ -178,13 +178,14 @@ public class ProductService {
             //save cart_detail
             //find product by id
 
-            Optional<Product> product = Optional.ofNullable(this.productRepository.findById(productId));
-            if(product.isPresent()){
-                Product realProduct = product.get();
+           Product product = this.productRepository.findById(productId);
+
+            if(product != null){
+                Product realProduct = product;
 
                 // check san pham da duoc them vao gio hang truoc day chua
                 CartDetail oldDetail = this.cartDetailRepository.findByCartAndProduct(cart, realProduct);
-                if(oldDetail == null){
+                if (oldDetail == null) {
                     CartDetail cartDetail = new CartDetail();
                     cartDetail.setCart(cart);
                     cartDetail.setProduct(realProduct);
@@ -192,17 +193,26 @@ public class ProductService {
                     cartDetail.setPrice(realProduct.getPrice());
                     this.cartDetailRepository.save(cartDetail);
 
-                    //update sum
-                    int s = cart.getSum() +1;
+                    // update sum
+                    int s = cart.getSum() + 1;
                     cart.setSum(s);
                     this.cartRepository.save(cart);
-                    session.setAttribute("sum",s );
-                    //session.setAttribute("cartId","" );
-                }else {
+                    session.setAttribute("sum", s);
+                } else {
                     oldDetail.setQuantity(oldDetail.getQuantity() + 1);
                     this.cartDetailRepository.save(oldDetail);
+
+                    // cập nhật session sum
+                    long s = cart.getCartDetail().stream()
+                            .mapToLong(CartDetail::getQuantity) // dùng mapToLong
+                            .sum();
+                    cart.setSum((int) s); // convert sang int nếu sum trong Cart là int
+                    session.setAttribute("sum", (int) s);
+                    this.cartRepository.save(cart);
+
                 }
-                
+
+
             }
             
 
