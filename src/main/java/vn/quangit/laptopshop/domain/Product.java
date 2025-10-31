@@ -25,7 +25,7 @@ public class Product {
     @Min(value = 0,message = "nhập giá lớn hơn 0")
     private long price;
     private String image;
-    @Column(columnDefinition = "MEDIUMTEXT")
+    @Column(columnDefinition = "TEXT")
     private String detailDesc;
     @Size(min=1,message = "không được để trống mô tả sản phẩm")
     private String shortDesc;
